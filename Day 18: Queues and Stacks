@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    // Stack to store characters
+    private Stack<Character> stack = new Stack<>();
+    // Queue to store characters
+    private Queue<Character> queue = new LinkedList<>();
+
+    // Push character to stack
+    public void pushCharacter(char ch) {
+        stack.push(ch);
+    }
+
+    // Enqueue character to queue
+    public void enqueueCharacter(char ch) {
+        queue.add(ch);
+    }
+
+    // Pop character from stack
+    public char popCharacter() {
+        return stack.pop();
+    }
+
+    // Dequeue character from queue
+    public char dequeueCharacter() {
+        return queue.remove();
+    }
+
+    public static void main(String[] args) throws IOException {
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+        scan.close();
+
+        // Create a Solution object:
+        Solution p = new Solution();
+
+        // Enqueue and push each character:
+        for (char c : input.toCharArray()) {
+            p.pushCharacter(c);
+            p.enqueueCharacter(c);
+        }
+
+        // Check if input is a palindrome
+        boolean isPalindrome = true;
+        for (int i = 0; i < input.length() / 2; i++) {
+            if (p.popCharacter() != p.dequeueCharacter()) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        // Print result
+        System.out.println("The word, " + input + ", is "
+                + (isPalindrome ? "a palindrome." : "not a palindrome."));
+    }
+}
