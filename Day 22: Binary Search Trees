@@ -1,0 +1,53 @@
+import java.io.*;
+import java.util.*;
+
+class Node {
+    Node left, right;
+    int data;
+
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+public class Solution {
+
+    // Method to insert a new node in the BST
+    public static Node insert(Node root, int data) {
+        if (root == null) {
+            return new Node(data);
+        } else {
+            if (data <= root.data) {
+                root.left = insert(root.left, data);
+            } else {
+                root.right = insert(root.right, data);
+            }
+            return root;
+        }
+    }
+
+    // Method to compute the height of the BST
+    public static int getHeight(Node root) {
+        if (root == null) {
+            return -1; // Base case: height of empty tree is -1
+        }
+
+        int leftHeight = getHeight(root.left);
+        int rightHeight = getHeight(root.right);
+
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        Node root = null;
+        while (T-- > 0) {
+            int data = sc.nextInt();
+            root = insert(root, data);
+        }
+        int height = getHeight(root);
+        System.out.println(height);
+    }
+}
