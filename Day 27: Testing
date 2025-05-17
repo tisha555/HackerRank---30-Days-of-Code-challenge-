@@ -1,0 +1,80 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static int minimumIndex(List<Integer> seq) {
+        if (seq.isEmpty()) {
+            throw new IllegalArgumentException("Cannot get the minimum value index from an empty sequence");
+        }
+        int minIdx = 0;
+        for (int i = 1; i < seq.size(); ++i) {
+            if (seq.get(i) < seq.get(minIdx)) {
+                minIdx = i;
+            }
+        }
+        return minIdx;
+    }
+
+    static class TestDataEmptyArray {
+        public static List<Integer> get_array() {
+            return new ArrayList<>();
+        }
+    }
+
+    static class TestDataUniqueValues {
+        public static List<Integer> get_array() {
+            return Arrays.asList(5, 10, 3, 8);
+        }
+
+        public static int get_expected_result() {
+            return 2; // Index of 3
+        }
+    }
+
+    static class TestDataExactlyTwoDifferentMinimums {
+        public static List<Integer> get_array() {
+            return Arrays.asList(4, 1, 3, 1, 5);
+        }
+
+        public static int get_expected_result() {
+            return 1; // First occurrence of 1
+        }
+    }
+
+    public static void main(String[] args) {
+        // Test 1: Empty array
+        try {
+            List<Integer> seq = TestDataEmptyArray.get_array();
+            minimumIndex(seq);
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+
+        // Test 2: Unique values
+        List<Integer> seq2 = TestDataUniqueValues.get_array();
+        assert seq2.size() >= 2;
+        Set<Integer> uniqueSet = new HashSet<>(seq2);
+        assert uniqueSet.size() == seq2.size();
+        int expected2 = TestDataUniqueValues.get_expected_result();
+        int result2 = minimumIndex(seq2);
+        assert result2 == expected2;
+
+        // Test 3: Exactly two minimums
+        List<Integer> seq3 = TestDataExactlyTwoDifferentMinimums.get_array();
+        assert seq3.size() >= 2;
+
+        List<Integer> sorted = new ArrayList<>(seq3);
+        Collections.sort(sorted);
+        int minValue = sorted.get(0);
+        long countMin = seq3.stream().filter(x -> x == minValue).count();
+        assert countMin == 2;
+
+        int expected3 = TestDataExactlyTwoDifferentMinimums.get_expected_result();
+        int result3 = minimumIndex(seq3);
+        assert result3 == expected3;
+
+        // Only print this if all tests pass
+        System.out.println("OK");
+    }
+}
