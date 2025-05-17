@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Reading actual return date
+        int actualDay = scanner.nextInt();
+        int actualMonth = scanner.nextInt();
+        int actualYear = scanner.nextInt();
+
+        // Reading expected return date
+        int expectedDay = scanner.nextInt();
+        int expectedMonth = scanner.nextInt();
+        int expectedYear = scanner.nextInt();
+
+        int fine = 0;
+
+        if (actualYear > expectedYear) {
+            fine = 10000; // Returned in a different year
+        } else if (actualYear == expectedYear) {
+            if (actualMonth > expectedMonth) {
+                fine = 500 * (actualMonth - expectedMonth); // Returned in same year but different month
+            } else if (actualMonth == expectedMonth && actualDay > expectedDay) {
+                fine = 15 * (actualDay - expectedDay); // Returned in same month and year, but late
+            }
+        }
+
+        System.out.println(fine);
+    }
+}
